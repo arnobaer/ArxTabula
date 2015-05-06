@@ -127,6 +127,8 @@ class PointsView(QWidget):
             painter.drawPoint(x, y)
             painter.drawArc(QRect(x-5, y-5, 10, 10), 0, 16 * 360)
             painter.drawText(x+5, y-5, point.name())
+    def onResizeEvent(self, event):
+        event.accept()
 
 if __name__ == '__main__':
     app = QApplication([])
@@ -143,7 +145,7 @@ if __name__ == '__main__':
     points.append(CtrlPoint("X", 4000, 5000))
 
     view = PointsView(points)
-    view.setWindowTitle("ArxTabula")
+    view.setMinimumSize(800, 600)
     view.setPadding(25)
 
     view.addImage("./411.png", [
@@ -159,7 +161,12 @@ if __name__ == '__main__':
         CtrlPoint("D", 100, 350), ]
     )
 
-    window.setCentralWidget(view)
+    area = QScrollArea(window)
+    area.setWidget(view)
+    area.setWidgetResizable(True)
+    view.setMinimumSize(800, 600)
+
+    window.setCentralWidget(area)
     window.show()
 
     app.exec_()
