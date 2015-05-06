@@ -1,3 +1,7 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+from arxtabula import *
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import random
@@ -22,15 +26,6 @@ def dist(p, q):
 class CtrlPoint(QPointF):
     def __init__(self, name, x, y):
         super(CtrlPoint, self).__init__(x, y)
-        self.setName(name)
-    def name(self):
-        return self._name
-    def setName(self, name):
-        self._name = name
-
-class ImagePoint(QPoint):
-    def __init__(self, name, x, y):
-        super(ImagePoint, self).__init__(x, y)
         self.setName(name)
     def name(self):
         return self._name
@@ -133,11 +128,10 @@ class PointsView(QWidget):
             painter.drawArc(QRect(x-5, y-5, 10, 10), 0, 16 * 360)
             painter.drawText(x+5, y-5, point.name())
 
-
 if __name__ == '__main__':
     app = QApplication([])
 
-    #points = [QPointF(random.randint(-18000, 20000), random.randint(-25000, 25000)) for _ in range(20)]
+    window = ArxMainWindow()
 
     points = []
     points.append(CtrlPoint("A", 1000, 1000))
@@ -148,24 +142,24 @@ if __name__ == '__main__':
     points.append(CtrlPoint("F", 1000, 3000))
     points.append(CtrlPoint("X", 4000, 5000))
 
-    window = PointsView(points)
-    window.setWindowTitle("ArxTabula")
-    window.resize(800, 600)
-    window.setPadding(25)
+    view = PointsView(points)
+    view.setWindowTitle("ArxTabula")
+    view.setPadding(25)
 
-    window.addImage("./411.png", [
-        ImagePoint("D", 50, 50),
-        ImagePoint("C", 250, 50),
-        ImagePoint("E", 250, 250),
-        ImagePoint("F", 50, 250), ]
+    view.addImage("./411.png", [
+        CtrlPoint("D", 50, 50),
+        CtrlPoint("C", 250, 50),
+        CtrlPoint("E", 250, 250),
+        CtrlPoint("F", 50, 250), ]
     )
-    window.addImage("./412b.png", [
-        ImagePoint("A", 100, 100),
-        ImagePoint("B", 350, 100),
-        ImagePoint("C", 350, 350),
-        ImagePoint("D", 100, 350), ]
+    view.addImage("./412b.png", [
+        CtrlPoint("A", 100, 100),
+        CtrlPoint("B", 350, 100),
+        CtrlPoint("C", 350, 350),
+        CtrlPoint("D", 100, 350), ]
     )
 
+    window.setCentralWidget(view)
     window.show()
 
     app.exec_()
