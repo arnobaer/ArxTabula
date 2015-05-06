@@ -162,8 +162,11 @@ if __name__ == '__main__':
     )
 
     area = QScrollArea(window)
+    window.area = area
+    window.view = view
     area.setWidget(view)
-    area.setWidgetResizable(True)
+    area.setAlignment(Qt.AlignCenter)
+    #area.setWidgetResizable(True)
     view.setMinimumSize(800, 600)
 
     window.setCentralWidget(area)
